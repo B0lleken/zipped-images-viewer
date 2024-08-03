@@ -1,5 +1,5 @@
-# zipped-images-viewer
-An image gallery viewer where the image files are read from zipped files. Created with NodeJS.
+# Zipped images viewer
+An image gallery viewer where the image files are read from .zip files. Created using Node.js.
 
 ## Run application
 1. Rename `.env.example` to `.env`, change any values if needed.
