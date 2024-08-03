@@ -24,6 +24,58 @@ const map = {
 	'.doc': 'application/msword'
 };
 
+// API logic
+const doAPILogic = (req, res) => {
+  const parsedUrl = url.parse(req.url, true);
+  const pathname = parsedUrl.pathname;
+  const ext = path.parse(pathname).ext;
+
+  // When the path has an extension then it is not an API request, but a file request
+  // and should default to a "file not found".
+  if (ext !== '') {
+	  notFound(res, 'File', `${publicFolder}${pathname}`);
+	  return;
+  }
+
+  const requestMethod = req.method;
+  const pathList = pathname.split('/');
+
+  // remove the empty string item at the start of the pathList
+  pathList.shift();
+
+  console.dir(pathList);
+  console.log('req method: ' + requestMethod);
+
+  // Process the GET request for the "images" endpoint
+  if (pathList[0] === 'images' && requestMethod === 'GET') {
+
+  }
+
+  // when no api logic is found then return "404 not found"
+  notFound(res, 'Page', pathname);
+};
+
+const notFound = (res, contentType = '', pathname = '') => {
+  let responseMessage = 'not found!';
+
+  if (pathname !== '') {
+	  responseMessage = pathname + ' ' + responseMessage;
+  }
+
+  if (contentType !== '') {
+	  responseMessage = contentType + ' ' + responseMessage;
+  }
+
+  if (pathname === '' && contentType === '') {
+	  responseMessage = '404 ' + responseMessage;
+  }
+
+  res.statusCode = 404;
+  res.end(responseMessage);
+};
+
+
+
 // starts a http server locally on port 3000
 const app = createServer((req, res) => {
 
@@ -45,6 +97,7 @@ const app = createServer((req, res) => {
   // check for existing path (file or directory)
   if (typeof pathStats === 'undefined') {
 	  // do API logic for request
+	  doAPILogic(req, res);
       return;
   }
 
@@ -53,6 +106,7 @@ const app = createServer((req, res) => {
 	  // check for a GET request
 	  if (req.method !== 'GET') {
 		  // do API logic for non-GET requests
+		  doAPILogic(req, res);
 		  return;
 	  }
 
@@ -63,6 +117,7 @@ const app = createServer((req, res) => {
 	  // check for an index file
 	  if (typeof indexFileStats === 'undefined') {
 		  // do API logic for GET requests
+		  doAPILogic(req, res);
 		  return;
 	  }
 
