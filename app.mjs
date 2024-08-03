@@ -53,33 +53,19 @@ const doAPILogic = async (req, res) => {
   // remove the empty string item at the start of the pathList
   pathList.shift();
 
-  console.dir(pathList);
-  console.log('req method: ' + requestMethod);
-
   // Process the GET request for the "images" endpoint
   if (pathList[0] === 'images' && requestMethod === 'GET') {
-	  console.log('.');
 
 	  // the second path value should be an integer as it will be used to retrieve the image zip file
 	  if (isNumeric(pathList[1]) === true) {
-		  console.log('..');
 
 		  // get the zip file at index "pathList[1]"
 		  // we are first converting the string to a number and then to an integer
 		  // to first change a possible 1e3 to 1000 and then remove any decimals
 		  const filename = imagesNameList[parseInt(Number(pathList[1]))];
 
-		  console.dir(imagesNameList);
-		  console.log('filename: ' + filename);
-
-		  console.log("idx: " + parseInt(Number(pathList[1])));
-		  console.log("number: " + Number(pathList[1]));
-		  console.log("pathlist[1] value: " + pathList[1]);
-
 		  if (typeof filename !== 'undefined') {
 			  const zip = new StreamZip.async({ file: `${imagesFolder}/${filename}` });
-
-			  console.log(`Reading zip file: ${imagesFolder}/${filename}`);
 
 			  // Check the "part" value of the path
 			  // this will be used for pagination so that only a set amount of images is processed at a time
@@ -87,23 +73,16 @@ const doAPILogic = async (req, res) => {
 				  const part = (isNumeric(pathList[3]) === true) ? parseInt(Number(pathList[3])) : 0;
 				  const entriesCount = await zip.entriesCount;
 
-				  console.log(`Entries read: ${entriesCount}`);
-
 				  const entries = await zip.entries();
 				  // change entries object to an easier loopable array list
 				  const entriesList = Object.values(entries);
 				  const startAmount = part * maxImageAmount;
 				  const maxAmount = startAmount + maxImageAmount;
 
-				  console.log('startAmount: ' + startAmount);
-				  console.log('maxAmount: ' + maxAmount);
-
 				  // TODO: instead of extract, stream the images instead?
 				  // https://www.npmjs.com/package/node-stream-zip
 				  for (let i = startAmount; i < maxAmount; i++) {
 					  const entry = entriesList[i];
-
-					  console.dir(entry);
 
 					  // skip loop when no entry is found
 					  if (typeof entry === 'undefined') {
@@ -122,19 +101,13 @@ const doAPILogic = async (req, res) => {
 					  //    ... mixing extracted files from other zip files
 					  const newImageFilename = `/tmp/${imageFilename.split('/').pop()}`;
 
-					  console.log('processing entry: ' + imageFilename);
-
 					  // only extract when image does not exist yet
 					  const imageFileStats = statSync(`${publicFolder}${newImageFilename}`, { throwIfNoEntry: false });
 
 					  if (typeof imageFileStats === 'undefined') {
-						  console.log('extracting entry: ' + imageFilename);
-
 						  // TODO: make sure the extraction folder(s) exist before extracting the files to them
 						  // extract files and place in "temporary" (public) folder
 						  await zip.extract(imageFilename, `${publicFolder}${newImageFilename}`);
-
-						  console.log('extracted to: ' + `${publicFolder}${newImageFilename}`);
 					  }
 
 					  responseJSON.push(newImageFilename);
