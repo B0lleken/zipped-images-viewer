@@ -1,7 +1,7 @@
 {
   "name": "zipped-images-viewer",
   "description": "An image gallery viewer where the image files are read from .zip files. Created using Node.js.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "B0lleken <5579636+B0lleken@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
