@@ -5,21 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Display zipped images with infinite scroll</title>
     <link rel="stylesheet" href="css/style.css">
-	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/script.js" defer></script>
   </head>
 <body>
 
 <div id="card-container">
+	<div id="first-loader-card" class="skeleton-card card"></div>
 </div>
-<div id="loader">
-  <div class="skeleton-card"></div>
-  <div class="skeleton-card"></div>
-  <div class="skeleton-card"></div>
-</div>
+
 <div class="card-actions">
-  <span>Showing 
-    <span id="card-count"></span> of 
-    <span id="card-total"></span> cards      
+  <span>Showing
+    <span id="card-count"></span> of
+    <span id="card-total"></span> cards
   </span>
 </div>
 
