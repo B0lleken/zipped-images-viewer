@@ -30,14 +30,8 @@ body {
   align-items: center;
 }
 
-#loader {
-  display: flex;
-}
-
 .skeleton-card {
   height: 55vh;
-  width: calc((100% / 3) - 16px);
-  margin: 8px;
   border-radius: 3px;
   transition: all 200ms ease-in-out;
   position: relative;
