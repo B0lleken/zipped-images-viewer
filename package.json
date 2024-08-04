@@ -1,4 +1,21 @@
 {
+  "name": "zipped-images-viewer",
+  "description": "An image gallery viewer where the image files are read from .zip files. Created using Node.js.",
+  "version": "0.1.0",
+  "author": "B0lleken <5579636+B0lleken@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/B0lleken/zipped-images-viewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/B0lleken/zipped-images-viewer/issues"
+  },
+  "homepage": "https://github.com/B0lleken/zipped-images-viewer",
+  "keywords": [],
   "dependencies": {
     "axios": "^1.7.2",
     "node-stream-zip": "^1.15.0"
