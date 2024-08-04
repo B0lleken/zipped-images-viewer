@@ -9,8 +9,9 @@ body {
 
 .card {
   height: 55vh;
-  width: calc((100% / 3) - 16px);
-  margin: 8px;
+  /* TODO: make some of these values dynamic. Especially that width divide */
+  width: calc((100% / 5) - 8px);
+  margin: 4px;
   border-radius: 3px;
   transition: all 200ms ease-in-out;
   display: flex;
